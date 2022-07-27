@@ -2,19 +2,25 @@ import os
 
 from flask import Flask
 
+import src.globals_init as globals_init
 from src.api import blueprints
 from src.config.config import configs
 from src.register import register_endpoints
 
-config_name = os.getenv('CONFIG_NAME')
 
-config = configs[config_name]
+def create_app():
+    config_name = os.getenv('CONFIG_NAME')
 
-application = Flask(__name__)
-application.config.from_object(config)
+    config = configs[config_name]
+
+    globals_init.initialize_globals()
+
+    app = Flask(__name__)
+    app.config.from_object(config)
+
+    register_endpoints(app, blueprints)
+
+    return app
 
 
-register_endpoints(application, blueprints)
-
-if __name__ == '__main__':
-    application.run()
+application = create_app()

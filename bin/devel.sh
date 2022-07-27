@@ -16,4 +16,4 @@ if [ ! -d ${HOME}/.virtualenvs/${VIRTUALENV} ]; then
 
 cd ${PROJECT_ROOT}
 
-uwsgi --master --http 0.0.0.0:${FLASK_PORT} --python-auto-reload 1 --honour-stdin --wsgi-file ${FLASK_APP}
+uwsgi --master --http 0.0.0.0:${FLASK_PORT} --python-auto-reload 1 --honour-stdin --enable-threads --wsgi-file ${FLASK_APP}
